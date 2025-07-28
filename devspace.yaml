@@ -1,0 +1,61 @@
+version: v2beta1
+name: gmail-upload
+
+# Define Docker images to build
+images:
+  backend:
+    image: gmail-backend
+    dockerfile: ./Dockerfile.backend
+    context: .
+  frontend:
+    image: gmail-frontend
+    dockerfile: ./Dockerfile.frontend
+    context: .
+
+# Define how to deploy to Kubernetes
+deployments:
+  gmail-upload:
+    kubectl:
+      manifests:
+        - k8s/namespace.yaml
+        - k8s/persistent-volume.yaml
+        - k8s/backend-deployment.yaml
+        - k8s/frontend-deployment.yaml
+
+# Define development configuration
+dev:
+  backend-dev:
+    imageSelector: gmail-backend
+    ports:
+      - port: "8000"
+    sync:
+      - path: ./app:/app/app
+        downloadExcludePaths:
+          - __pycache__/
+          - "*.pyc"
+      - path: ./main.py:/app/main.py
+  
+  frontend-dev:
+    imageSelector: gmail-frontend
+    ports:
+      - port: "5001"
+    sync:
+      - path: ./frontend_flask:/app
+        excludePaths:
+          - __pycache__/
+          - "*.pyc"
+          - uploads/
+
+# DevSpace commands for easier development
+commands:
+  logs-backend:
+    command: kubectl logs -f deployment/backend-deployment -n gmail-upload
+  logs-frontend:
+    command: kubectl logs -f deployment/frontend-deployment -n gmail-upload
+  logs-all:
+    command: kubectl logs -f -l app=backend -n gmail-upload --max-log-requests=10 & kubectl logs -f -l app=frontend -n gmail-upload --max-log-requests=10
+
+# Variables for customization
+vars:
+  NAMESPACE:
+    value: gmail-upload 

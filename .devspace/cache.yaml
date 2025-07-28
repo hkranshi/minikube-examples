@@ -1,0 +1,17 @@
+varsEncrypted: true
+images:
+    backend:
+        imageConfigHash: 8ba8f839b741fbf123f665719b741040a5cfbd094f1139cbbb7bbbf2b6fecfca
+        dockerfileHash: 80bc50460253eaf1df88b58eab7ca7aa727ec01a5f9230cd8bbe33da2c1b674e
+        contextHash: 43c08dfb83a744d2bd6cedca37fff30f9f662adabbdec34a6833a03e666df7f8
+        imageName: gmail-backend
+        tag: XASMmOU
+    frontend:
+        imageConfigHash: 58a65144ebe7c67205e63e46d636672df2cda878fab418cf2630c7e5cb149174
+        dockerfileHash: a8ffbd214347c2fbfd527740d10a90f44abbdccf11aa0299b1756bfb12d7c588
+        contextHash: 2e89d19099d83c6b2c3853d02448583ebbe016d37721fcd25f05a756ec8145c8
+        imageName: gmail-frontend
+        tag: MJhGROX
+lastContext:
+    namespace: gmail-upload
+    context: minikube

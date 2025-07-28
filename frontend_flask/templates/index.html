@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Gmail File Upload - Validate Email{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="header">
+        <h1>📧 Gmail File Upload</h1>
+        <p>Enter your Gmail address to start uploading files</p>
+    </div>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ 'error' if category == 'error' else 'success' }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('validate_email') }}" method="POST">
+        <div class="form-group">
+            <label for="email">Gmail Address</label>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="your.email@gmail.com" 
+                required
+                autocomplete="email"
+            >
+        </div>
+        
+        <button type="submit" class="btn">Validate Email</button>
+    </form>
+    
+    <div style="margin-top: 30px; padding: 20px; background: #f8fafc; border-radius: 8px;">
+        <h3 style="color: #333; margin-bottom: 10px;">✨ Features</h3>
+        <ul style="color: #666; line-height: 1.6;">
+            <li>🔒 <strong>Secure:</strong> Only Gmail addresses allowed</li>
+            <li>📁 <strong>File Upload:</strong> Up to 10MB per file</li>
+            <li>📊 <strong>Management:</strong> View and delete your files</li
+        </ul>
+    </div>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; color: #856404;">
+        <strong>Note:</strong> Only Gmail addresses (@gmail.com) are accepted.
+    </div>
+</div>
+{% endblock %} 
